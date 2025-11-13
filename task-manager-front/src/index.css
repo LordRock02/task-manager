@@ -1,68 +1,189 @@
+/* =========================================
+   1. VARIABLES (Tu Paleta Galaxy)
+   ========================================= */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-deep: #0D0D0D;    /* Negro Profundo */
+  --bg-night: #192340;   /* Azul Noche */
+  --primary: #343D73;    /* Azul Púrpura */
+  --accent: #5155A6;     /* Púrpura Vibrante */
+  --success: #10B981;    /* Verde (Para estados completados) */
+  --danger: #EF4444;     /* Rojo (Para eliminar/cancelar) */
+  --warning: #F59E0B;    /* Naranja (Para en progreso) */
+  
+  --text-main: #FFFFFF;  /* Blanco Puro */
+  --text-muted: #8D8EA6; /* Gris Lavanda */
+  
+  --glass-bg: rgba(255, 255, 255, 0.1);       /* Vidrio base */
+  --glass-border: rgba(255, 255, 255, 0.15);  /* Borde sutil */
+  --glass-shine: rgba(255, 255, 255, 0.05);   /* Brillo hover */
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* =========================================
+   2. RESET Y BASE
+   ========================================= */
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  /* Fondo Galáctico Fijo para toda la app */
+  background: linear-gradient(135deg, var(--bg-deep) 0%, var(--bg-night) 50%, var(--primary) 100%);
+  background-attachment: fixed; 
+  color: var(--text-main);
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* =========================================
+   3. LAYOUTS (Estructuras)
+   ========================================= */
+/* Úsalo en Login/Registro para centrar todo */
+.layout-center {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* Úsalo en Dashboard para contenido fluido */
+.layout-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* =========================================
+   4. COMPONENTES UI (Reutilizables)
+   ========================================= */
+
+/* --- Tarjeta de Vidrio (Para Login, Modales, Items) --- */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+
+/* --- Títulos --- */
+.text-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.text-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* --- Inputs (Cajas de texto) --- */
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none; /* Para que el clic pase al input */
+}
+
+.input-control {
+  width: 100%;
+  background: rgba(13, 13, 13, 0.3); /* Más oscuro para contraste */
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 14px 14px 14px 50px; /* Espacio para el icono */
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-control:focus {
+  border-color: var(--accent);
+  background: rgba(13, 13, 13, 0.5);
+  box-shadow: 0 0 0 4px rgba(81, 85, 166, 0.2);
+}
+
+/* --- Botones (El sistema de botones) --- */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border: none;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Botón Primario (Blanco - Para acciones principales como Login) */
+.btn-primary {
+  background: white;
+  color: var(--bg-night);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+.btn-primary:hover:not(:disabled) {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Botón de Acción (Morado - Para "Crear Tarea" o "Guardar") */
+.btn-accent {
+  background: var(--accent);
+  color: white;
+}
+.btn-accent:hover:not(:disabled) {
+  background: #6569c2;
+  box-shadow: 0 4px 15px rgba(81, 85, 166, 0.4);
+}
+
+/* Botón de Peligro (Rojo - Para "Eliminar" o "Cerrar Sesión") */
+.btn-danger {
+  background: rgba(239, 68, 68, 0.2);
+  color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: white;
+}
+
+/* --- Links --- */
+.link {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.link:hover {
+  color: var(--accent);
+  text-decoration: underline;
 }
