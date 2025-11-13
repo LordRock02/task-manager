@@ -16,10 +16,12 @@ public class RegisterRequest {
     private String username;
 
     @NotBlank(message = "La contraseña no puede estar vacía")
-    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres") // Aumenté a 8 por seguridad
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Pattern(
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!*])(?=\\S+$).{8,}$",
             message = "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial"
     )
     private String password;
+
+    private String rol;
 }
